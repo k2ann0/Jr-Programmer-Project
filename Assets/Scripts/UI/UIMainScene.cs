@@ -21,6 +21,8 @@ public class UIMainScene : MonoBehaviour
     protected IUIInfoContent m_CurrentContent;
     protected List<Building.InventoryEntry> m_ContentBuffer = new List<Building.InventoryEntry>();
 
+    public string sceneName;
+
 
     private void Awake()
     {
@@ -72,5 +74,10 @@ public class UIMainScene : MonoBehaviour
             m_CurrentContent = content;
             InfoPopup.Name.text = content.GetName();
         }
+    }
+
+    public void BackButton(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
     }
 }
