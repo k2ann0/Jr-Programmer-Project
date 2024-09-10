@@ -10,7 +10,10 @@ using UnityEngine.SceneManagement;
 public class MenuUIHandler : MonoBehaviour
 {
     public ColorPicker ColorPicker;
+    private ColorHandler colorHandlerScript;
+    private Color lastSelectedColor;
     private string sceneName;
+
 
     public void NewColorSelected(Color color)
     {
@@ -19,14 +22,32 @@ public class MenuUIHandler : MonoBehaviour
     
     private void Start()
     {
+        colorHandlerScript = GetComponent<ColorHandler>();
         ColorPicker.Init();
         //this will call the NewColorSelected function when the color picker have a color button clicked.
         ColorPicker.onColorChanged += NewColorSelected;
     }
 
+    public Color SaveSelectedColor()
+    {
+        Debug.Log(ColorPicker.GetSelectedColor());
+        return ColorPicker.GetSelectedColor();
+    }
+
+    public void SaveLastSelectedColor()
+    {
+        lastSelectedColor = ColorPicker.GetSelectedColor();
+    }
+
+    public void LoadSelectedColor()
+    {
+        colorHandlerScript.SetColor(ColorPicker.GetSelectedColor());
+    }
+
     public void StartButton(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+        colorHandlerScript.SetColor(SaveSelectedColor());
     }
 
     public void QuitGame()
